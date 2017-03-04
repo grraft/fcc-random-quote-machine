@@ -1,24 +1,50 @@
+html {
+  background: url(https://source.unsplash.com/category/technology/800x600) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .App {
   text-align: center;
+  height: 100vh;
+  background-color: rgba(255,255,255,0.9);  
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.buttons-container {
+  text-align: right;
+  padding: 5%;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.quote-container {
+  transition: 1s;
 }
 
-.App-intro {
-  font-size: large;
+.quote-content {
+
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.quote-author {
+
+}
+
+.loading {
+  opacity: 0.05;
+}
+
+.loaded {
+  opacity: 1;
+}
+
+.footer {
+  font-size: small;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+  border-top-width: thin;
+  border-top-color: grey;
 }
