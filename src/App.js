@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import request from 'request';
-import jQuery from 'jquery'; // Since we need to strip html tags, we need this unfortunately
+import jQuery from 'jquery'; // Used for ajax req and stripping html tags
 
-const tweetUrl = '' || location.href; // override url to tweet here, otherwise use current href
-
+const tweetUrl = 'http://codepen.io/kunalmandalia/full/GWqWbz' || location.href; // override url to tweet here, otherwise use current href
 /**
  * Since quotesondesign returns html strings (i.e. tags embedded in string)
  *  we'll want to render it directly, but we must do so explicitely as per https://facebook.github.io/react/docs/dom-elements.html
@@ -76,21 +74,26 @@ class App extends Component {
      * grab single quote. Pass a random v so query isn't cached and new quotes are fetched
      *  this is needed when working in CodePen
      */
-    const quotesAPI = `http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&v=${Math.random()}`;
+    const quotesAPI = `https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&v=${Math.random()}`;
 
     // this.setState not available within the request function so expose outside to make it accessible
     const onError = () => { this.setState({ error: true, loading: false }); }
     const onSuccess = (body) => { 
-      const q = JSON.parse(body)[0]; // grab first element as we've only requested single quote      
+      console.log(body);
+      const q = body[0]; // grab first element as we've only requested single quote      
       this.setState({ quote: q.content, author: q.title, loading: false, error: false }); 
     }
-    // ajax call
-    request(quotesAPI, function (error, response, body) {
-      if (error || !body) {
-        onError();
-      } else {
-        onSuccess(body);
-      }
+
+    jQuery.ajax({
+        url: quotesAPI,
+        type: 'GET',
+        success: function(data){ 
+          console.log('success data', data);
+          onSuccess(data);
+        },
+        error: function(data) {
+          onError();
+        }
     });
   }
 
